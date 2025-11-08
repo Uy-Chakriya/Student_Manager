@@ -10,19 +10,25 @@ import java.util.stream.Collectors;
 @Service
 public class StudentService {
 
+    // Static counter for simple ID generation, now in the service layer
+    private static Long idCounter = 0L;
+    
     // In-memory ArrayList to store students
     private final List<Student> students = new ArrayList<>();
 
     // Initial dummy data
     public StudentService() {
-        // Dummy students are created and assigned unique IDs automatically
-        students.add(new Student("Bopha K.", "bopha@example.com", "Computer Science"));
-        students.add(new Student("Chann T.", "chann@example.com", "Physics"));
-        students.add(new Student("Dara S.", "dara@example.com", "Mathematics"));
+        // Dummy students are created and assigned unique IDs automatically by the addStudent method
+        // Note: passing null for ID since the service will assign the real ID
+        addStudent(new Student(null, "Bopha K.", "bopha@example.com", "Computer Science"));
+        addStudent(new Student(null, "Chann T.", "chann@example.com", "Physics"));
+        addStudent(new Student(null, "Dara S.", "dara@example.com", "Mathematics"));
     }
 
-    // Create/Add a new student
+    // Create/Add a new student (assign ID here)
     public void addStudent(Student student) {
+        // Assign a new ID before adding to the list
+        student.setId(++idCounter);
         students.add(student);
     }
 

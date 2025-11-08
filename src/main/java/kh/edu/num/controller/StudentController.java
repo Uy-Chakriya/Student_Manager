@@ -48,9 +48,8 @@ public class StudentController {
         if (result.hasErrors()) {
             return "create-student";
         }
-        // ID is generated in the Student constructor/default constructor 
-        // and assigned values from the form binding
-        studentService.addStudent(new Student(student.getName(), student.getEmail(), student.getMajor()));
+        // Pass the form-bound student object directly. The Service layer now assigns the ID.
+        studentService.addStudent(student);
         return "redirect:/students"; // Redirect to the list view (Step 6)
     }
 
@@ -67,12 +66,12 @@ public class StudentController {
     @PostMapping("/edit/{id}")
     public String updateStudent(@PathVariable("id") Long id, @Valid @ModelAttribute("student") Student student, BindingResult result) {
         if (result.hasErrors()) {
-            student.setId(id); // Keep the ID for re-displaying the form
+            // Keep the ID for re-displaying the form, though the hidden field handles this too.
+            student.setId(id); 
             return "edit-student";
         }
         
-        // Pass the ID from the path variable to the service layer for update
-        student.setId(id); 
+        // The ID is correctly bound to the 'student' object via the hidden form field in edit-student.html
         studentService.updateStudent(student);
         return "redirect:/students";
     }

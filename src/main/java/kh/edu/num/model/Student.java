@@ -17,22 +17,11 @@ public class Student {
     @NotEmpty(message = "Major is required")
     private String major;
 
-    // Static counter for simple ID generation
-    private static Long idCounter = 0L;
-
+    // Default constructor required for form binding
     public Student() {
-        // Default constructor required for form binding
     }
 
-    public Student(String name, String email, String major) {
-        // Only generate new ID if we are creating a NEW student
-        this.id = ++idCounter;
-        this.name = name;
-        this.email = email;
-        this.major = major;
-    }
-
-    // Constructor for use during Update (to retain original ID)
+    // Constructor for use during Update (to retain original ID) or Service ID assignment
     public Student(Long id, String name, String email, String major) {
         this.id = id;
         this.name = name;
